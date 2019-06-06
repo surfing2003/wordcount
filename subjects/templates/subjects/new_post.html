@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br><br><br><br><br>
+<h2>{{ user.username }}님에게 {{ subject.title }}(이)란..?</h2>
+<h5>dangsin-ege i jujelan</h5>
+<br>
+<form action="{% url 'create_post' subject.id %}" method="POST">
+    {% csrf_token %}
+    <label>글 내용 : </label><br>
+    <textarea id="content" name="content" rows="4" cols="50" onkeyup="countingWords()"></textarea><br>
+    <br>
+        <span id = "word01">0</span> &nbsp;글자수
+    <br><br>
+    <input type="submit" class="btn btn-secondary" value="글쓰기">
+</form>
+{% endblock %}

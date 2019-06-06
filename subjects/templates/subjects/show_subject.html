@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<h1>#{{ subject.id }}번째 주제</h1>
+<h2>주제 : {{ subject.title }}</h2>
+<p> {{ subject.content|linebreaks }}</p>
+
+
+<form action="{% url 'delete_subject' subject.id %}" method="POST">
+    {% csrf_token %}
+    <a href="{% url 'update_subject' subject.id %}" class="btn btn-xs btn-secondary">주제 수정</a>
+    <input type="submit" class="btn btn-xs btn-secondary" value="주제 삭제">
+</form>
+<br>
+
+
+
+<h5>주제와 관련된 글의 수 : {{ subject.posts.count }}개</h5>
+<a href="{% url 'new_post' subject.id %}" class="btn btn-warning">자신의 감성을 듬뿍 담은 글 남기기</a> 
+{% for post in subject.posts.all %}
+    <br>==============================================<br>
+    <br>
+    <h5>{{ post.user }}님의 글 :)</h5><br>
+    <!--<h5>{{ post.wordcount }}글자 :)</h5><br>-->
+    <h4>{{ post.content|linebreaks }}</h4>
+    
+
+    
+    <p>공감도 : {% widthratio post.likes.count  post.dislikes.count|add:post.likes.count 100 %}%
+    
+    <form action="{% url 'create_like' post.id %}" method="POST">
+        {% csrf_token %}
+        <input style="display:none" type="number" name="state" value="1"/>
+        <input type="submit" class="btn btn-success" value="좋아요">
+    </form>
+    
+    <form action="{% url 'create_dislike' post.id %}" method="POST">
+        {% csrf_token %}
+        <input style="display:none" type="number" name="state" value="1"/>
+        <input type="submit" class="btn btn-danger" value="싫어요">
+    </form>
+    
+    
+    즐겨찾기 한 사람 :  
+    {% for user in post.likes_check.all %}
+        {{ user.username }}
+    {% empty %}
+        없음
+    {% endfor %}    
+
+    <form action="{% url 'likes_check' post.id%}" method="POST">
+        {% csrf_token %}
+        {{ user.username }}
+        {{ post.likes_check.user.username }}
+            {% for post2 in user.likes_check.all %}
+                {% if post.id == post2.id %}
+                    <input type="submit" class="btn btn-danger" value="즐겨찾기삭제">
+                {% else %}
+                    <input type="submit" class="btn btn-success" value="즐겨찾기">
+                {% endif %}
+            {% endfor %}
+
+    </form>
+
+    <form action="{% url 'delete_post' post.id %}" method="POST">
+        {% csrf_token %}
+        <a href="{% url 'update_post' post.id %}" class="btn btn-secondary">글 수정</a>
+        <input type="submit" class="btn btn-danger" value="글 삭제">
+    </form><br>
+    
+    {% empty %}
+    <p>글이 없습니다.</p>
+{% endfor %}
+    <br>==============================================<br>
+    <a href="{% url 'like_list' %}" class="btn btn-xs btn-secondary">즐겨찾기</a>
+    <a href="{% url 'home' %}" class="btn btn-xs btn-secondary">메인화면</a>
+{% endblock %}

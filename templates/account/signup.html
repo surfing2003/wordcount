@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br><br>
+            <img src="{% static 'img/logo.png'  %}"><br><br><br>
+<p>이미 계정이 있으신가요? 정신차리고<a href="/accounts/login/"> 로그인하러...</a>.</p>
+
+<form class="signup" id="signup_form" method="post" action="/accounts/signup/">
+    <input type="hidden" name="csrfmiddlewaretoken" value="aMY9mZlpPUBKOmxMrATiqdmsdlALERNCz2UlXth4Ql2OVQWDGRPDW9TcJt5tI9lL">
+    <p><label for="id_username">사용자이름 : </label> <input type="text" name="username" minlength="1" required="" autofocus="autofocus" maxlength="150" id="id_username" placeholder="Username"></p>
+    <p><label for="id_email">이메일 : </label> <input type="email" name="email" id="id_email" placeholder="E-mail address"></p>
+    <p><label for="id_password1">비밀번호 : </label> <input type="password" name="password1" required="" id="id_password1" placeholder="Password"></p>
+    <p><label for="id_password2">비밀번호 확인 : </label> <input type="password" name="password2" required="" id="id_password2" placeholder="Password (again)"></p>
+    
+    <button type="submit">가으입 >></button>
+    {% csrf_token %}
+</form>
+
+{% endblock %}

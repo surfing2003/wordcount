@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br><br><br><br><br>
+<h2>{{ user.username }}님에게 {{ subject.title }}(이)란..?</h2>
+<h5>dangsin-ege i jujelan</h5>
+<br>
+
+<form action="{% url 'update_post' post.id %}" method="POST">
+    {% csrf_token %}
+    <label>글 내용 수정 : </label><br>
+    <textarea name="content" rows="4" cols="50">{{ post.content }}</textarea><br>
+    
+    <input type="submit"  class="btn btn-secondary" value="수정하기">
+</form>
+{% endblock %}
+

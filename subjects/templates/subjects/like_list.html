@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{{ user.username }} 님이 즐겨찾기 한 글 <br><br>
+<div class="container">
+  <div class="row">
+    {% for post in user.likes_check.all %}
+        
+            <div class="card col-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h1 class="card-title" ># {{ post.subject.title }} :)</h1><br>
+                    <p class="card-text" >{{ post.user }}님의 글 :)
+                    {{ post.content|linebreaks }}</p><br>
+                    <form action="{% url 'likes_check' post.id%}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-xs btn-danger" value="즐겨찾기해제">
+                    </form>
+                </div>
+            </div>
+
+    {% empty %}
+    <div class="card col" style="width: 18rem;">
+        <div class="card-body">
+        <h1 class="card-title" >없음</h1>
+        </div>
+    </div>
+    {% endfor %}
+        
+    </div>
+    <br><br><br>
+    <a href="{% url 'home' %}" class="btn btn-xs btn-secondary">메인화면</a>
+</div>
+{% endblock %}

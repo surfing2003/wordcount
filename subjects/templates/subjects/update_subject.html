@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br><br><br><br><br>
+<h2>주제의 정보를 수정하겠습니다.</h2>
+<h5>ni jujeleul al-ala</h5>
+<br>
+<form action="{% url 'update_subject' subject.id %}" method="POST">
+    {% csrf_token %}
+    
+    <label>관련 인용구 수정 :</label><br>
+    <textarea name="content" rows="4" cols="50">{{ subject.content }}</textarea><br>
+    <br><br>
+    <input type="submit"class="btn btn-secondary" value="수정">
+</form>
+{% endblock %}

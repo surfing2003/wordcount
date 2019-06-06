@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+<p>시작하는 재주는 위대하지만,<br> 
+마무리짓는 재주는 더욱 위대하다.<br>  
+- H.W. 롱펠로</p>
+<form method="post" action="/accounts/logout/">
+    <input type="hidden" name="csrfmiddlewaretoken" value="CoyvLq4bXuXOFCnfamdvaEcBG2blGEw91EuHmU0QYVoSM6M6pD9QGAJlcaG3KW4i">
+    <button class = "btn btn-secondary" type="submit">로그아웃 >></button>
+    {% csrf_token %}
+</form>
+
+{% endblock %}
